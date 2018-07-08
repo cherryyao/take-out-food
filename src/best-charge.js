@@ -71,7 +71,7 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
 }
 
 //5.获得当前购物车中的特价菜品
-function getSpceialItems(loadPromotions,ItemDetails){
+function getSpceialItems(loadPromotions){
     let SpceialItems =[];
     for(let promotions of loadPromotions)
     {
@@ -83,34 +83,32 @@ function getSpceialItems(loadPromotions,ItemDetails){
         }
       }
     }
-
-    
-    let currentSpceialItems= [];
-    for(let item of ItemDetails){
-      //console.info(item);
-      for(let spceialItem of SpceialItems){
-        if(spceialItem == item.id){
-          currentSpceialItems.push(spceialItem);
-        }
-      }
-    }
-    console.info(currentSpceialItems);
-    return currentSpceialItems;
+    console.info(SpceialItems);
+    return SpceialItems;
   }
 
 
 
-// //6.特价菜品半价优惠金额
-// function SpceialItemSave(currentSpceialItems){
-//   let SpceialItemSavePrice = 0;
-//   for(let item of currentSpceialItems){  
-//       if(SpceialItem === item.id){
-//         SpceialItemSavePrice += item.price/2;
-//       }
-//   }
-//   console.info(SpceialItemSavePrice);
-//   return SpceialItemSavePrice;
-// }
+//6.特价菜品半价优惠金额
+function SpceialItemSave(SpceialItems,ItemDetails){
+ 
+  let currentSpceialItems=[];
+  for(let item of ItemDetails){
+    //console.info(item);
+    for(let spceialItem of SpceialItems){
+      let currentSpceialItemsSave= 0;
+      if(spceialItem == item.id){
+        currentSpceialItemsSave = (item.price/2)*item.count;   
+        currentSpceialItems.push({
+          name:item.name,
+          spceialtemsave:currentSpceialItemsSave
+        });   
+      }
+    }
+  }
+  console.info(currentSpceialItems);
+  return currentSpceialItems;
+}
 
 
 module.exports = {
@@ -118,5 +116,6 @@ module.exports = {
   buildItemwithDetail,
   unDiscountTotal,
   ThirtyMinusSixSave,
-  getSpceialItems
+  getSpceialItems,
+  SpceialItemSave
 }
