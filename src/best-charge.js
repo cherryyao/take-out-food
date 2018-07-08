@@ -56,9 +56,20 @@ function unDiscountTotal(ItemDetails){
   return unDiscountTotalPrice;
 }
 
+//4.30-6优惠金额
+function ThirtyMinusSixSave(unDiscountTotalPrice){
+  let ThirtyMinusSixSave = 0;
+  if(unDiscountTotalPrice>30){
+    ThirtyMinusSixSave = parseInt(unDiscountTotalPrice/30)*6;
+  }
+  // console.info(ThirtyMinusSixSave);
+  return ThirtyMinusSixSave;
+}
+
 
 module.exports = {
   buildFormattedItem,
   buildItemwithDetail,
-  unDiscountTotal
+  unDiscountTotal,
+  ThirtyMinusSixSave
 }

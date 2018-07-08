@@ -1,5 +1,5 @@
 const main = require('../src/best-charge');
-const {buildFormattedItem,buildItemwithDetail,unDiscountTotal} = require('../src/best-charge');
+const {buildFormattedItem,buildItemwithDetail,unDiscountTotal,ThirtyMinusSixSave} = require('../src/best-charge');
 const {loadAllItems} = require('../src/items');
 
 describe('Take out food', function () {
@@ -24,6 +24,14 @@ describe('Take out food', function () {
     let unDiscountTotalPrice = unDiscountTotal(inputs);
     let expected = 38;
     expect(unDiscountTotalPrice).toEqual(expected);
+
+  });
+
+  it ('30-6Save--ThirtyMinusSixSave()',function(){
+    let inputs = 38;
+    let ThirtyMinusSixSavePrice = ThirtyMinusSixSave(inputs);
+    let expected = 6;
+    expect(ThirtyMinusSixSavePrice).toEqual(expected);
 
   });
 
