@@ -46,9 +46,19 @@ function buildItemwithDetail(formarttedItems,AllItems){
    return ItemDetails;
 }
 
+//3.打折前的总价
+function unDiscountTotal(ItemDetails){
+  let unDiscountTotalPrice = 0;
+  for(let item of ItemDetails){
+    unDiscountTotalPrice += item.subtotal;
+  }
+  console.info(unDiscountTotalPrice)
+  return unDiscountTotalPrice;
+}
 
 
 module.exports = {
   buildFormattedItem,
-  buildItemwithDetail
+  buildItemwithDetail,
+  unDiscountTotal
 }
