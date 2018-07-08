@@ -15,31 +15,25 @@ function bestCharge(selectedItems) {
   const str = formarttedList(ItemDetails,ThirtyMinusSixSavePrice,currentSpceialItems,spceialItemsavetotal,flag,totalPrice);
   return str;
   //const str = formarttedList();
-  
 }
 
 //1.格式化菜品
 function buildFormattedItem(inputs){
 let tempArray=[];
 let formarttedItems=[];
-for(let item of inputs){
-   tempArray = item.split("x");
-   formarttedItems.push({
-     id:tempArray[0].trim(),
-     count:parseFloat(tempArray[1])
-   });
-}
+inputs.map(item=>{
+  tempArray = item.split("x");
+  formarttedItems.push({id:tempArray[0].trim(),count:parseFloat(tempArray[1])});
+});
 //console.info(formarttedItems);
 return formarttedItems;
 }
 
-
 //2.生成商品详情
 function buildItemwithDetail(formarttedItems,AllItems){
    let ItemDetails=[];
-   for(let formarttedItem of formarttedItems)
-   {
-     for(let item of AllItems){
+   formarttedItems.map(formarttedItem=>{
+    AllItems.map(item=>{
       if(formarttedItem.id === item.id){
         ItemDetails.push({
           id:formarttedItem.id,
@@ -49,8 +43,8 @@ function buildItemwithDetail(formarttedItems,AllItems){
           subtotal:item.price*formarttedItem.count
         });
       }
-     }
-   }
+    });
+   });
    //console.info(ItemDetails);
    return ItemDetails;
 }
@@ -58,10 +52,9 @@ function buildItemwithDetail(formarttedItems,AllItems){
 //3.打折前的总价
 function unDiscountTotal(ItemDetails){
   let unDiscountTotalPrice = 0;
-
-  for(let item of ItemDetails){
+  ItemDetails.map(item=>{  
     unDiscountTotalPrice += item.subtotal;
-  }
+  });
   //console.info(unDiscountTotalPrice)
   return unDiscountTotalPrice;
 }
@@ -74,34 +67,29 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
   }else{
     ThirtyMinusSixSave=0;
   }
-   console.info("30-6优惠价钱:"+ThirtyMinusSixSave);
+  console.info("30-6优惠价钱:"+ThirtyMinusSixSave);
   return ThirtyMinusSixSave;
 }
 
 //5.获得当前购物车中的特价菜品
 function getSpceialItems(loadPromotions){
     let SpceialItems =[];
-    for(let promotions of loadPromotions)
-    {
-      if(promotions.type==="指定菜品半价")
-      {
-        for(let promotionsItem of promotions.items)
-        {
+    loadPromotions.map(promotions=>{
+      if(promotions.type==="指定菜品半价"){
+        for(let promotionsItem of promotions.items){
           SpceialItems.push(promotionsItem);
         }
       }
-    }
+    });
     //console.info(SpceialItems);
     return SpceialItems;
   }
 
 //6.特价菜品半价优惠金额
 function SpceialItemSave(SpceialItems,ItemDetails){
- 
   let currentSpceialItems=[];
-  for(let item of ItemDetails){
-    //console.info(item);
-    for(let spceialItem of SpceialItems){
+  ItemDetails.map(item=>{
+    SpceialItems.map(spceialItem=>{
       let currentSpceialItemsSave= 0;
       if(spceialItem == item.id){
         currentSpceialItemsSave = (item.price/2)*item.count;   
@@ -110,8 +98,8 @@ function SpceialItemSave(SpceialItems,ItemDetails){
           spceialtemsave:currentSpceialItemsSave
         });   
       }
-    }
-  }
+    });
+  });
   //console.info(currentSpceialItems);
   return currentSpceialItems;
 }
@@ -121,7 +109,7 @@ function spceialItemsavetotalPrice(currentSpceialItems){
   for(let save of currentSpceialItems){
     spceialItemsavetotal +=save.spceialtemsave;
   }
-  console.info("半价优惠的金额:"+spceialItemsavetotal);
+  //console.info("半价优惠的金额:"+spceialItemsavetotal);
   return spceialItemsavetotal;
 }
 
@@ -161,15 +149,10 @@ function CalTotalItem(flag,unDiscountTotal,ThirtyMinusSixSave,SpceialItemSave){
 
 //9.格式化清单
 function formarttedList(ItemDetails,ThirtyMinusSixSave,SpceialItemSave,spceialItemsavetotal,PromotionProject,totalPrice){
-  
-  
   str  = `\n============= 订餐明细 =============\n`
   ItemDetails.map(item=>{
     str += `${item.name} x ${item.count} = ${item.subtotal}元\n`;
   });
-  // 黄焖鸡 x 1 = 18元
-  // 肉夹馍 x 2 = 12元
-  // 凉皮 x 1 = 8元
   if(PromotionProject!=0){
     str += `-----------------------------------\n`;
     str += `使用优惠:\n`;
@@ -188,15 +171,9 @@ function formarttedList(ItemDetails,ThirtyMinusSixSave,SpceialItemSave,spceialIt
       str += `)，省${spceialItemsavetotal}元\n`
     } 
   }
-  // -----------------------------------
-  // 使用优惠:
-  // 指定菜品半价(黄焖鸡，凉皮)，省13元
   str += `-----------------------------------\n`;
   str += `总计：${totalPrice}元\n`;
   str += `===================================`;
-  // -----------------------------------
-  // 总计：25元
-  // ===================================`
   console.info(str);
   return str
 }
