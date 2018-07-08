@@ -9,7 +9,7 @@ function bestCharge(selectedItems) {
   const ThirtyMinusSixSavePrice = ThirtyMinusSixSave(unDiscountTotalPrice);
   const SpceialItems = getSpceialItems(loadPromotions());
   const currentSpceialItems=SpceialItemSave(SpceialItems,ItemDetails);
-  const spceialItemsavetotal = spceialItemsavetotalPrice(currentSpceialItems);
+  const spceialItemsavetotal = spceialItemSaveTotalPrice(currentSpceialItems);
   const flag = selectPromotionProject(spceialItemsavetotal,ThirtyMinusSixSavePrice);
   const totalPrice = CalTotalItem(flag,unDiscountTotalPrice,ThirtyMinusSixSavePrice,spceialItemsavetotal);
   const str = formarttedList(ItemDetails,ThirtyMinusSixSavePrice,currentSpceialItems,spceialItemsavetotal,flag,totalPrice);
@@ -71,7 +71,7 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
   return ThirtyMinusSixSave;
 }
 
-//5.获得当前购物车中的特价菜品
+//5.获得特价菜品
 function getSpceialItems(loadPromotions){
     let SpceialItems =[];
     loadPromotions.map(promotions=>{
@@ -104,7 +104,8 @@ function SpceialItemSave(SpceialItems,ItemDetails){
   return currentSpceialItems;
 }
 
-function spceialItemsavetotalPrice(currentSpceialItems){
+//7.特价商品优惠金额
+function spceialItemSaveTotalPrice(currentSpceialItems){
   let spceialItemsavetotal = 0;
   for(let save of currentSpceialItems){
     spceialItemsavetotal +=save.spceialtemsave;
@@ -113,7 +114,7 @@ function spceialItemsavetotalPrice(currentSpceialItems){
   return spceialItemsavetotal;
 }
 
-//7.选择优惠方案,0是没有优惠、1是满30-6、2是特价菜品
+//8.选择优惠方案,0是没有优惠、1是满30-6、2是特价菜品
 function selectPromotionProject(spceialItemsavetotal,ThirtyMinusSixSave){
   let flag=0;
   if(spceialItemsavetotal === ThirtyMinusSixSave){
