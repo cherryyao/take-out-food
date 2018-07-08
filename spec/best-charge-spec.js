@@ -1,6 +1,7 @@
 const main = require('../src/best-charge');
-const {buildFormattedItem,buildItemwithDetail,unDiscountTotal,ThirtyMinusSixSave} = require('../src/best-charge');
+const {buildFormattedItem,buildItemwithDetail,unDiscountTotal,ThirtyMinusSixSave,getSpceialItems} = require('../src/best-charge');
 const {loadAllItems} = require('../src/items');
+const {loadPromotions} = require('../src/promotions');
 
 describe('Take out food', function () {
   it ('format the inputs--buildFormattedItem()',function(){
@@ -32,6 +33,13 @@ describe('Take out food', function () {
     let ThirtyMinusSixSavePrice = ThirtyMinusSixSave(inputs);
     let expected = 6;
     expect(ThirtyMinusSixSavePrice).toEqual(expected);
+
+  });
+
+  it ('get spceial items --getSpceialItems()',function(){
+    let SpceialItems = getSpceialItems(loadPromotions());
+    let expected = ['ITEM0001', 'ITEM0022'];
+    expect(SpceialItems).toEqual(expected);
 
   });
 

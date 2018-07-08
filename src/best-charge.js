@@ -1,9 +1,13 @@
 const {loadAllItems} = require('../src/items');
+const {loadPromotions} = require('../src/promotions');
 
 function bestCharge(selectedItems) {
   
   const formarttedItems = buildFormattedItem(selectedItems);
-  buildItemwithDetail(formarttedItems,loadAllItems());
+  const ItemDetails = buildItemwithDetail(formarttedItems,loadAllItems());
+  const unDiscountTotalPrice = unDiscountTotal(ItemDetails);
+  const ThirtyMinusSixSavePrice = ThirtyMinusSixSave(unDiscountTotalPrice);
+  const SpceialItems = getSpceialItems(loadPromotions());
 
 
 
@@ -66,10 +70,28 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
   return ThirtyMinusSixSave;
 }
 
+//5.获得特价菜品
+function getSpceialItems(loadPromotions){
+  let SpceialItems =[];
+  for(let promotions of loadPromotions)
+  {
+    if(promotions.type==="指定菜品半价")
+    {
+      for(let promotionsItem of promotions.items)
+      {
+        SpceialItems.push(promotionsItem);
+      }
+    }
+  }
+  console.info(SpceialItems);
+  return SpceialItems;
+}
+
 
 module.exports = {
   buildFormattedItem,
   buildItemwithDetail,
   unDiscountTotal,
-  ThirtyMinusSixSave
+  ThirtyMinusSixSave,
+  getSpceialItems
 }
