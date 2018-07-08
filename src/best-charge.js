@@ -70,22 +70,47 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
   return ThirtyMinusSixSave;
 }
 
-//5.获得特价菜品
-function getSpceialItems(loadPromotions){
-  let SpceialItems =[];
-  for(let promotions of loadPromotions)
-  {
-    if(promotions.type==="指定菜品半价")
+//5.获得当前购物车中的特价菜品
+function getSpceialItems(loadPromotions,ItemDetails){
+    let SpceialItems =[];
+    for(let promotions of loadPromotions)
     {
-      for(let promotionsItem of promotions.items)
+      if(promotions.type==="指定菜品半价")
       {
-        SpceialItems.push(promotionsItem);
+        for(let promotionsItem of promotions.items)
+        {
+          SpceialItems.push(promotionsItem);
+        }
       }
     }
+
+    
+    let currentSpceialItems= [];
+    for(let item of ItemDetails){
+      //console.info(item);
+      for(let spceialItem of SpceialItems){
+        if(spceialItem == item.id){
+          currentSpceialItems.push(spceialItem);
+        }
+      }
+    }
+    console.info(currentSpceialItems);
+    return currentSpceialItems;
   }
-  console.info(SpceialItems);
-  return SpceialItems;
-}
+
+
+
+// //6.特价菜品半价优惠金额
+// function SpceialItemSave(currentSpceialItems){
+//   let SpceialItemSavePrice = 0;
+//   for(let item of currentSpceialItems){  
+//       if(SpceialItem === item.id){
+//         SpceialItemSavePrice += item.price/2;
+//       }
+//   }
+//   console.info(SpceialItemSavePrice);
+//   return SpceialItemSavePrice;
+// }
 
 
 module.exports = {
