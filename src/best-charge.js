@@ -65,6 +65,8 @@ function ThirtyMinusSixSave(unDiscountTotalPrice){
   let ThirtyMinusSixSave = 0;
   if(unDiscountTotalPrice>30){
     ThirtyMinusSixSave = parseInt(unDiscountTotalPrice/30)*6;
+  }else{
+    ThirtyMinusSixSave=0;
   }
   // console.info(ThirtyMinusSixSave);
   return ThirtyMinusSixSave;
@@ -87,8 +89,6 @@ function getSpceialItems(loadPromotions){
     return SpceialItems;
   }
 
-
-
 //6.特价菜品半价优惠金额
 function SpceialItemSave(SpceialItems,ItemDetails){
  
@@ -110,6 +110,27 @@ function SpceialItemSave(SpceialItems,ItemDetails){
   return currentSpceialItems;
 }
 
+//7.选择优惠方案,0是没有优惠、1是满30-6、2是特价菜品
+function selectPromotionProject(currentSpceialItems,ThirtyMinusSixSave){
+  let flag=0;
+  let spceialItemsavetotal = 0;
+  for(let save of currentSpceialItems){
+    spceialItemsavetotal +=save.spceialtemsave;
+  }
+
+  if(spceialItemsavetotal > 0 && ThirtyMinusSixSave > 0 ){
+    if(spceialItemsavetotal <= ThirtyMinusSixSave){
+      flag =1;
+    }
+    else {
+      flag = 2;
+    }
+  }else{
+    flag=0;
+  }
+  return flag;
+}
+
 
 module.exports = {
   buildFormattedItem,
@@ -117,5 +138,6 @@ module.exports = {
   unDiscountTotal,
   ThirtyMinusSixSave,
   getSpceialItems,
-  SpceialItemSave
+  SpceialItemSave,
+  selectPromotionProject
 }
